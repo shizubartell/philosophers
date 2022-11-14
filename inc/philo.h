@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/14 13:01:49 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:37:53 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 //**                DEFINES                             **//
 
 # define FORK "%lu %d has taken a forky.\n"
+# define SLEEP "%lu %d is taking a nap.\n"
+# define DINNER "%lu %d is eating a bite.\n"
+# define THINK "%lu %d is using his braincells.\n"
 
 //*********************************************************//
 //**                STRUCTURES                          **//
@@ -68,6 +71,11 @@ int			            main(int argc, char **argv);
 
 //*********************************************************//
 //**                ACTIONS.C                           **//
+
+bool                    dinning(t_info *info, t_dinner *philo);
+bool                    take_forks(t_info *info, t_dinner *philo);
+void                    sleeping(t_info *info, t_dinner *philo);
+void                    thinking(t_info *info, t_dinner *philo);
 
 //*********************************************************//
 //**                PRINTING.C                          **//
