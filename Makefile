@@ -3,6 +3,7 @@
 
 NAME				:= philo
 
+FUN					:= 0
 CC					:= gcc
 CFLAGS				:= -Wall -Werror -Wextra
 

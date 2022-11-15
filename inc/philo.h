@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/14 14:37:53 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/15 10:44:24 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,26 @@
 # include <stdbool.h>
 # include <pthread.h>
 # include <string.h>
+# include <sys/time.h>
 
 //*********************************************************//
 //**                DEFINES                             **//
 
-# define FORK "%lu %d has taken a forky.\n"
+# if FUN == 1
+
+# define FORK "%lu %d has taken a chopstick.\n"
 # define SLEEP "%lu %d is taking a nap.\n"
 # define DINNER "%lu %d is eating a bite.\n"
 # define THINK "%lu %d is using his braincells.\n"
+
+# else
+
+# define FORK "%lu %d has taken a fork.\n"
+# define SLEEP "%lu %d is sleeping.\n"
+# define DINNER "%lu %d is eating.\n"
+# define THINK "%lu %d is thinking.\n"
+
+# endif
 
 //*********************************************************//
 //**                STRUCTURES                          **//
@@ -81,5 +93,11 @@ void                    thinking(t_info *info, t_dinner *philo);
 //**                PRINTING.C                          **//
 
 void                    print_act(char *mess, t_dinner *philo, t_info *info);
+
+//*********************************************************//
+//**                UTILS.C                             **//
+
+size_t get_timestamp(void);
+
 
 #endif
