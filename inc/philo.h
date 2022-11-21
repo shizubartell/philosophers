@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 12:21:59 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:59:00 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_info
 //**                MAIN.C                              **//
 
 int						main(int argc, char **argv);
+void					mutex_destroyer(t_info *info);
 
 //*********************************************************//
 //**                ACTIONS.C                           **//
@@ -117,5 +118,6 @@ bool					error_thrower(int input);
 //**                THREADING.C                         **//
 
 bool					thread_nb_philos(t_info *info);
+bool					mutex_nb_forks(t_info *info);
 
 #endif

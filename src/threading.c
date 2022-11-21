@@ -6,12 +6,14 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:33:16 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 12:22:29 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:51:43 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+// creating a thread for the number of philos
+// that are sitting at the table. 
 bool	thread_nb_philos(t_info *info)
 {
 	int	i;
@@ -25,5 +27,23 @@ bool	thread_nb_philos(t_info *info)
 		info->philo[i].last_dinnertime = get_timestamp();
 		i++;
 	}
+	return (true);
+}
+
+// initializing a mutex for the number of
+// forks the philos are going to use
+bool	mutex_nb_forks(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->nb_philos)
+	{
+		if (pthread_mutex_init(&info->fork[i], NULL))
+			return (false) ;
+		i++;
+	}
+	if (pthread_mutex_init(&info->print, NULL))
+		return (false);
 	return (true);
 }
