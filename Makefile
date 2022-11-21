@@ -39,6 +39,10 @@ ${NAME}:${OBJS}
 	echo "$(BLUE)$(NAME) compiled and ready to be tested!$(END_COLOR)"
 	echo "$(GREEN) Philosophers are ready to die!$(END_COLOR)"
 
+fun: CFLAGS += -D FUN
+fun: ${OBJS}
+    ${CC} ${CFLAGS} -I${INC} -o $@ $^
+
 clean:
 	rm -rf $(OBJ_PATH)
 
@@ -47,5 +51,6 @@ fclean: clean
 	$(RM) $(OBJ_DIR)
 
 re: fclean all
+	echo "$(GREEN)Cleaned up all files for $(NAME)!"
 
 .PHONY: all re clean fclean
