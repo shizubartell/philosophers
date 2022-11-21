@@ -6,19 +6,19 @@ NAME				:= philo
 FUN					:= 0
 CC					:= gcc
 CFLAGS				:= -Wall -Werror -Wextra
+RM					:= rm -rf
 
 # **************************************************************************** #
 # SOURCES
 
-SRC_PATH = sources/
-OBJ_PATH = objects/
+SRCS		 		:= src/actions.c \
+						src/printing.c \
+						src/utils.c \
+						src/main.c
 
-SRC		=
-SRCS	= $(addprefix $(SRC_PATH), $(SRC))
-OBJ		= $(SRC:.c=.o)
-OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
+OBJS = $(SRCS:.c=.o)
 
-INC		= -I ./includes/
+INC		 			:= /inc
 
 # **************************************************************************** #
 # COLORS
@@ -26,27 +26,25 @@ INC		= -I ./includes/
 GREEN		:= \033[0;92m
 YELLOW		:= \033[0;93m
 BLUE		:= \033[0;94m
+END_COLOR	:= \033[0;39m
 
 # **************************************************************************** #
 # RULES
 
 all: $(NAME)
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	echo "make $(NAME)"
-	@mkdir -p $(OBJ_PATH)
-	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
-	echo "$(BLUE)$(NAME) compiled and ready to be tested!"
-	echo "$(GREEN) Philosophers are ready to die!"
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+${NAME}:${OBJS}
+	${CC} ${CFLAGS} -I${INC} -o $@ $^
+	echo "$(BLUE)$(NAME) compiled and ready to be tested!$(END_COLOR)"
+	echo "$(GREEN) Philosophers are ready to die!$(END_COLOR)"
 
 clean:
 	rm -rf $(OBJ_PATH)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
+	$(RM) $(OBJ_DIR)
 
 re: fclean all
 

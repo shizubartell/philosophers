@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:13:04 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/15 11:49:57 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/19 10:24:38 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ void	sleep_to_time(size_t time)
 		usleep(10);
 }
 
+// simple function to see if our input is a
+// digit or not
+int	ft_isdigit(int c)
+{
+	return ('0' <= c && c <= '9');
+}
+
 // isnum from our libft for later usage to go through the
 // input of arguements and to be able to check them 
 int	ft_isnum(char const *str)
@@ -53,4 +60,28 @@ int	ft_isnum(char const *str)
 			return (0);
 	}
 	return (1);
+}
+
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	result;
+	int	neg;
+
+	neg = 1;
+	i = 0;
+	result = 0;
+	while (nptr[i] == '\t' || nptr[i] == '\n' || nptr[i] == '\v'
+		|| nptr[i] == '\f' || nptr[i] == '\r' || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '-')
+		neg = -1;
+	if (nptr[i] == '+' || neg == -1)
+		i++;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		result = result * 10 + (nptr[i] - '0');
+		i++;
+	}
+	return (result * neg);
 }

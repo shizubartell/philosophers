@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/15 10:44:24 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/19 11:27:04 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_info
     int                 nb_eaten;
     bool                flagbreak;
     size_t              starttime;
+    size_t              time_to_die;
     t_dinner            *philo;
     pthread_mutex_t     print;
     pthread_mutex_t    *fork;
@@ -79,7 +80,7 @@ typedef struct s_info
 //*********************************************************//
 //**                MAIN.C                              **//
 
-int			            main(int argc, char **argv);
+int                     main(int argc, char **argv);
 
 //*********************************************************//
 //**                ACTIONS.C                           **//
@@ -97,7 +98,21 @@ void                    print_act(char *mess, t_dinner *philo, t_info *info);
 //*********************************************************//
 //**                UTILS.C                             **//
 
-size_t get_timestamp(void);
+size_t                  get_timestamp(void);
+void                    sleep_to_time(size_t time);
+int                     ft_isnum(char const *str);
+int                     ft_isdigit(int c);
+int                     ft_atoi(const char *nptr);
 
+//*********************************************************//
+//**                INITIALIZE.C                        **//
+
+bool                    mem_for_infos(t_info *info);
+
+//*********************************************************//
+//**                ERRORERRORERROR.C                   **//
+
+void                    be_free(t_info *info);
+bool                    error_thrower(int input);
 
 #endif
