@@ -6,12 +6,18 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 08:43:03 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:21:41 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+// allocating memory for the information from our
+// philos and freeing parts of it in the process
+// as well
+// if specific "wrong" conditions are met, it will go
+// to the error function and throw a specific defined
+// error according to the situation
 bool	mem_for_infos(t_info *info)
 {
 	info->fork = malloc(sizeof(pthread_mutex_t) * info->nb_philos + 1);
@@ -26,6 +32,9 @@ bool	mem_for_infos(t_info *info)
 	return (true);
 }
 
+// using atoi to convert our string input to integers to
+// be able to get a value out of them and use it to iterate
+// through the argumgents
 void	args_put_to_info(int len, char *args[], t_info *info)
 {
 	int	i;
@@ -41,6 +50,9 @@ void	args_put_to_info(int len, char *args[], t_info *info)
 		info->nb_eaten = ft_atoi(args[i]);
 }
 
+// using the dot (.) syntax to access the
+// members of our dinner structure and initiliase
+// our dinnertable with values
 void	set_dinner(t_info *info)
 {
 	int i;

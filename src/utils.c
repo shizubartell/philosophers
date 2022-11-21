@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:13:04 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/19 10:24:38 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:29:19 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ int	ft_isnum(char const *str)
 	return (1);
 }
 
+// basic atoi function from our libft to be able to
+// return the converted integral number as an int
+// value
 int	ft_atoi(const char *nptr)
 {
 	int	i;

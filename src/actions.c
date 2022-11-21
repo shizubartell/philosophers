@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:57:13 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/14 14:37:03 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:32:10 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 // to be able to use it you need the proper library for it
 // <stdbool.h> and is working with the boolean logic
 
+// function for the philos to grab a fork and lock
+// it for the philo who is using it so that another
+// cant access it
+// flagbreak is used to store the bool true or false
+// value
 bool	take_forks(t_info *info, t_dinner *philo)
 {
 	if (info->flagbreak)
@@ -35,6 +40,9 @@ bool	take_forks(t_info *info, t_dinner *philo)
 	return (true);
 }
 
+// function to put the philos to sleep
+// and sending a msg using the SLEEP define
+// adding their sleep time via a different function
 void	sleeping(t_info *info, t_dinner *philo)
 {
 	if (info->flagbreak)

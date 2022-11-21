@@ -6,18 +6,21 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 09:39:51 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/19 10:45:28 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:26:55 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+// freeing shit
 void	be_free(t_info *info)
 {
 	free(info->fork);
 	free(info->philo);
 }
 
+// printing an error message according to the
+// triggered effect
 bool	error_thrower(int input)
 {
 	if (input == 1)
