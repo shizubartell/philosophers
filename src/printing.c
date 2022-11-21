@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:42:32 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 09:59:13 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:45:42 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 // to be able to lock the info to be printed for a moment in the
 // thread to make sure it doesnt get overwritten by a different
 // info to be printed
-void    print_act(char *mess, t_dinner *philo, t_info *info)
+void	print_act(char *mess, t_dinner *philo, t_info *info)
 {
-    if (info->flagbreak)
-        return;
-    pthread_mutex_lock(&info->print);
-    printf(mess, get_timestamp() - info->starttime, philo->id);
-    pthread_mutex_unlock(&info->print);
+	if (info->flagbreak)
+		return ;
+	pthread_mutex_lock(&info->print);
+	printf(mess, get_timestamp() - info->starttime, philo->id);
+	pthread_mutex_unlock(&info->print);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initiliaze.c                                       :+:      :+:    :+:   */
+/*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 10:50:25 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:43:39 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	args_put_to_info(int len, char *args[], t_info *info)
 // and its not possible to pass it via such a struct)
 void	set_dinnertable(t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < info->nb_philos)
@@ -85,4 +85,4 @@ bool	struct_initializer(int argc, char *argv[], t_info *info)
 		return (false);
 	set_dinnertable(info);
 	return (true);
-}	
+}

@@ -16,7 +16,8 @@ SRCS		 		:= src/actions.c \
 						src/utils.c \
 						src/main.c \
 						src/errorerrorerror.c \
-						src/initialize.c
+						src/initialize.c \
+						src/threading.c
 
 OBJS = $(SRCS:.c=.o)
 

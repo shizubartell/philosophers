@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:13:04 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 09:29:19 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:47:49 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 // and tv_usec number of microseconds of rest of elapsed time minus tv_sec
 size_t	get_timestamp(void)
 {
-	size_t	timestamp;
-	struct timeval tv;
+	size_t			timestamp;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	timestamp = tv.tv_sec * 10000 + tv.tv_usec * 1000;

@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:57:13 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 09:32:10 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:48:31 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	take_forks(t_info *info, t_dinner *philo)
 	if (info->nb_philos == 1)
 	{
 		pthread_mutex_unlock(&info->fork[philo->left_fork]);
-			return (false);
+		return (false);
 	}
 	pthread_mutex_lock(&info->fork[philo->right_fork]);
 	print_act(FORK, philo, info);
@@ -69,4 +69,19 @@ void	thinking(t_info *info, t_dinner *philo)
 	if (info->flagbreak)
 		return ;
 	print_act(THINK, philo, info);
+}
+
+void	*daily_life(void *arg)
+{
+	t_info		*info;
+	t_dinner	*philo;
+
+	philo = (t_dinner *)arg;
+	info = (t_info *)philo->info;
+	if (philo->id % 2 == 0)
+	{
+		print_act(THINK, philo, info);
+		usleep(50);
+	}
+	return (NULL);
 }
