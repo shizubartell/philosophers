@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 09:21:41 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 10:50:25 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	mem_for_infos(t_info *info)
 
 // using atoi to convert our string input to integers to
 // be able to get a value out of them and use it to iterate
-// through the argumgents
+// through the arguments
 void	args_put_to_info(int len, char *args[], t_info *info)
 {
 	int	i;
@@ -53,7 +53,10 @@ void	args_put_to_info(int len, char *args[], t_info *info)
 // using the dot (.) syntax to access the
 // members of our dinner structure and initiliase
 // our dinnertable with values
-void	set_dinner(t_info *info)
+// since strings cant be passed as input its important to
+// pass only integers (as strings are an array of characters
+// and its not possible to pass it via such a struct)
+void	set_dinnertable(t_info *info)
 {
 	int i;
 
@@ -70,4 +73,16 @@ void	set_dinner(t_info *info)
 		info->philo[i].info = info;
 		i++;
 	}
+}
+
+// setting up our structure in general, allocating
+// memory for our information that we need to store for
+// our philos
+bool	struct_initializer(int argc, char *argv[], t_info *info)
+{
+	args_put_to_info(argc, argv, info);
+	if (!mem_for_infos(info))
+		return (false);
+	set_dinnertable(info);
+	return (true);
 }	

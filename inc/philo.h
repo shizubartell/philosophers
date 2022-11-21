@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/19 11:27:04 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 10:52:15 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ int                     ft_atoi(const char *nptr);
 //**                INITIALIZE.C                        **//
 
 bool                    mem_for_infos(t_info *info);
+void                    args_put_to_info(int len, char *args[], t_info *info);
+void                    set_dinnertable(t_info *info);
+bool                    struct_initializer(int argc, char *argv[], t_info *info);
 
 //*********************************************************//
 //**                ERRORERRORERROR.C                   **//

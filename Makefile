@@ -14,7 +14,9 @@ RM					:= rm -rf
 SRCS		 		:= src/actions.c \
 						src/printing.c \
 						src/utils.c \
-						src/main.c
+						src/main.c \
+						src/errorerrorerror.c \
+						src/initialize.c
 
 OBJS = $(SRCS:.c=.o)
 
