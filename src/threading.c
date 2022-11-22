@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:33:16 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 12:51:43 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:17:51 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ bool	mutex_nb_forks(t_info *info)
 		i++;
 	}
 	if (pthread_mutex_init(&info->print, NULL))
+		return (false);
+	return (true);
+}
+
+// initializing a mutex, if its not our
+// fork mutex it returns false, otherwise true
+bool	initialize_mutex(t_info *info)
+{
+	if (!mutex_nb_forks(info))
 		return (false);
 	return (true);
 }

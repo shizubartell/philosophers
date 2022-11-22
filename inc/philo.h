@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 12:59:00 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:25:05 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define SLEEP "%lu %d is taking a nap.\n"
 # define DINNER "%lu %d is eating a bite.\n"
 # define THINK "%lu %d is using his braincells.\n"
+# define DIE "%lu %d forgot how chopsticks work and starved to death.\n"
 
 #else
 
@@ -35,6 +36,7 @@
 # define SLEEP "%lu %d is sleeping.\n"
 # define DINNER "%lu %d is eating.\n"
 # define THINK "%lu %d is thinking.\n"
+# define DIE "%lu %d died.\n"
 
 # endif
 
@@ -62,6 +64,7 @@ typedef struct s_info
 	size_t				starttime;
 	size_t				time_to_die;
 	t_dinner			*philo;
+	pthread_t			check;
 	pthread_mutex_t		print;
 	pthread_mutex_t		*fork;
 }				t_info;
@@ -75,6 +78,7 @@ typedef struct s_info
 
 int						main(int argc, char **argv);
 void					mutex_destroyer(t_info *info);
+bool					arg_check(int argc, char *argv[]);
 
 //*********************************************************//
 //**                ACTIONS.C                           **//
@@ -119,5 +123,12 @@ bool					error_thrower(int input);
 
 bool					thread_nb_philos(t_info *info);
 bool					mutex_nb_forks(t_info *info);
+bool					initialize_mutex(t_info *info);
+
+//*********************************************************//
+//**                MONITORING.C                        **//
+
+bool					check_dinnertime(t_info *info, t_dinner *philo, int *count);
+void					death_counter(void *arg);
 
 #endif

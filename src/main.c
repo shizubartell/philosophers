@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:21 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 12:58:24 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:33:10 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,34 @@ void	mutex_destroyer(t_info *info)
 		pthread_mutex_destroy(&info->fork[i]);
 		i++;
 	}
+}
+
+bool	arg_check(int argc, char *argv[])
+{
+	int	i;
+
+	i = 0;
+	while (i < argc)
+	{
+		if (!ft_isnum(argv[i]) || ft_atoi(argv[i]) == 0)
+			return (false);
+			i++;
+	}
+	return (true);
+}
+
+bool	startup(t_info *info)
+{
+	int			i;
+	pthread_t	check;
+
+	info->starttime = get_timestamp();
+	if (!thread_nb_philos(info))
+	{
+		be_free(info);
+		return (error_thrower(5));
+	}
+	return (true);
 }
 
 // at the moment only testing if the

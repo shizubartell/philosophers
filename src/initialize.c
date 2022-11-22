@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 11:43:39 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:28:48 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	mem_for_infos(t_info *info)
 	if (info->philo == NULL)
 	{
 		free(info->fork);
-		return (error_thrower(1));
+		return (error_thrower(3));
 	}
 	return (true);
 }
@@ -84,5 +84,10 @@ bool	struct_initializer(int argc, char *argv[], t_info *info)
 	if (!mem_for_infos(info))
 		return (false);
 	set_dinnertable(info);
+	if (!initialize_mutex(info))
+	{
+		be_free(info);
+		return (error_thrower(4));
+	}
 	return (true);
 }

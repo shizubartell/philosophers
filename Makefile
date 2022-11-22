@@ -17,7 +17,8 @@ SRCS		 		:= src/actions.c \
 						src/main.c \
 						src/errorerrorerror.c \
 						src/initialize.c \
-						src/threading.c
+						src/threading.c \
+						src/monitoring.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -47,11 +48,11 @@ fun: ${OBJS}
     ${CC} ${CFLAGS} -I${INC} -o $@ $^
 
 clean:
-	rm -rf $(OBJ_PATH)
+	rm -rf $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(OBJ_DIR)
+	$(RM) $(OBJS)
 
 re: fclean all
 	echo "$(GREEN)Cleaned up all files for $(NAME)!"
