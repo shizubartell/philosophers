@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/22 11:25:05 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:11:52 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PHILO_H
 # include <unistd.h>
 # include <stdio.h>
+# include <limits.h>
+# include <string.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <pthread.h>
@@ -48,7 +50,7 @@ typedef struct s_dinner
 	int					id;
 	int					right_fork;
 	int					left_fork;
-	int					nb_meals;
+	int					eat_times;
     size_t				last_dinnertime;
 	pthread_t			thr;
 	struct s_info		*info;
@@ -78,6 +80,7 @@ typedef struct s_info
 
 int						main(int argc, char **argv);
 void					mutex_destroyer(t_info *info);
+bool					startup(t_info *info);
 bool					arg_check(int argc, char *argv[]);
 
 //*********************************************************//
@@ -101,7 +104,7 @@ size_t					get_timestamp(void);
 void					sleep_to_time(size_t time);
 int						ft_isnum(char const *str);
 int						ft_isdigit(int c);
-int						ft_atoi(const char *nptr);
+int						ft_atoi(const char *str);
 
 //*********************************************************//
 //**                INITIALIZE.C                        **//
@@ -129,6 +132,6 @@ bool					initialize_mutex(t_info *info);
 //**                MONITORING.C                        **//
 
 bool					check_dinnertime(t_info *info, t_dinner *philo, int *count);
-void					death_counter(void *arg);
+void					*death_counter(void *arg);
 
 #endif

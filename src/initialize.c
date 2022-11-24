@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/22 11:28:48 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:24:13 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 // error according to the situation
 bool	mem_for_infos(t_info *info)
 {
-	info->fork = malloc(sizeof(pthread_mutex_t) * info->nb_philos + 1);
+	info->fork = malloc(sizeof(pthread_mutex_t) * (info->nb_philos + 1));
 	if (info->fork == NULL)
 		return (error_thrower(3));
 	info->philo = malloc(sizeof(t_dinner) * info->nb_philos);
@@ -63,13 +63,13 @@ void	set_dinnertable(t_info *info)
 	i = 0;
 	while (i < info->nb_philos)
 	{
-		info->philo[i].id = i - 1;
+		info->philo[i].id = i + 1;
 		if (i == 0)
 			info->philo[i].right_fork = info->nb_philos - 1;
 		else
-			info->philo[i].right_fork = i -1;
+			info->philo[i].right_fork = i - 1;
 		info->philo[i].left_fork = i;
-		info->philo[i].nb_meals = 0;
+		info->philo[i].eat_times = 0;
 		info->philo[i].info = info;
 		i++;
 	}

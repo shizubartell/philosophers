@@ -5,7 +5,7 @@ NAME				:= philo
 
 FUN					:= 0
 CC					:= gcc
-CFLAGS				:= -Wall -Werror -Wextra
+CFLAGS				:= -Wall -Werror -Wextra -pthread
 RM					:= rm -rf
 
 # **************************************************************************** #
@@ -18,7 +18,8 @@ SRCS		 		:= src/actions.c \
 						src/errorerrorerror.c \
 						src/initialize.c \
 						src/threading.c \
-						src/monitoring.c
+						src/monitoring.c \
+						src/atoi.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -37,15 +38,14 @@ END_COLOR	:= \033[0;39m
 
 all: $(NAME)
 
-	echo "make $(NAME)"
 ${NAME}:${OBJS}
 	${CC} ${CFLAGS} -I${INC} -o $@ $^
-	echo "$(BLUE)$(NAME) compiled and ready to be tested!$(END_COLOR)"
-	echo "$(GREEN) Philosophers are ready to die!$(END_COLOR)"
+	@echo "$(BLUE)$(NAME) compiled and ready to be tested!$(END_COLOR)"
+	@echo "$(GREEN)Philosophers are ready to die!$(END_COLOR)"
 
 fun: CFLAGS += -D FUN
-fun: ${OBJS}
-    ${CC} ${CFLAGS} -I${INC} -o $@ $^
+fun:	${OBJS}
+		${CC} ${CFLAGS} -I ${INC} -o $@ $^
 
 clean:
 	rm -rf $(OBJS)
@@ -55,6 +55,6 @@ fclean: clean
 	$(RM) $(OBJS)
 
 re: fclean all
-	echo "$(GREEN)Cleaned up all files for $(NAME)!"
+	@echo "$(GREEN)Cleaned up all files for $(NAME)!"
 
 .PHONY: all re clean fclean

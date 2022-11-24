@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:13:04 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 11:47:49 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:13:41 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	get_timestamp(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	timestamp = tv.tv_sec * 10000 + tv.tv_usec * 1000;
+	timestamp = tv.tv_sec * 10000 + tv.tv_usec / 1000;
 	return (timestamp);
 }
 
@@ -60,31 +60,4 @@ int	ft_isnum(char const *str)
 			return (0);
 	}
 	return (1);
-}
-
-// basic atoi function from our libft to be able to
-// return the converted integral number as an int
-// value
-int	ft_atoi(const char *nptr)
-{
-	int	i;
-	int	result;
-	int	neg;
-
-	neg = 1;
-	i = 0;
-	result = 0;
-	while (nptr[i] == '\t' || nptr[i] == '\n' || nptr[i] == '\v'
-		|| nptr[i] == '\f' || nptr[i] == '\r' || nptr[i] == ' ')
-		i++;
-	if (nptr[i] == '-')
-		neg = -1;
-	if (nptr[i] == '+' || neg == -1)
-		i++;
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		result = result * 10 + (nptr[i] - '0');
-		i++;
-	}
-	return (result * neg);
 }
