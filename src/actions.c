@@ -6,96 +6,55 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:57:13 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/24 09:19:15 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:03:05 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-// boolean data type includes everything that
-// is either true or false
-// similar to binary (two states)
-// so 0 for false and 1 for true
-// to be able to use it you need the proper library for it
-// <stdbool.h> and is working with the boolean logic
-
-// function for the philos to grab a fork and lock
-// it for the philo who is using it so that another
-// cant access it
-// flagbreak is used to store the bool true or false
-// value
-bool	take_forks(t_info *info, t_dinner *philo)
-{
-	if (info->flagbreak)
-		return (false);
-	pthread_mutex_lock(&info->fork[philo->left_fork]);
-	print_act(FORK, philo, info);
-	if (info->nb_philos == 1)
-	{
-		pthread_mutex_unlock(&info->fork[philo->left_fork]);
-		return (false);
-	}
-	pthread_mutex_lock(&info->fork[philo->right_fork]);
-	print_act(FORK, philo, info);
-	return (true);
-}
-
 // function to put the philos to sleep
 // and sending a msg using the SLEEP define
 // adding their sleep time via a different function
-void	sleeping(t_info *info, t_dinner *philo)
+void	sleeping(t_status *status, t_philo *philo)
 {
-	if (info->flagbreak)
+	if (status->flagbreak)
 		return ;
-	print_act(SLEEP, philo, info);
-	sleep_to_time(info->time_to_sleep);
+	print_act(SLEEP, philo, status);
+	sleep_to_time(status->time_to_sleep);
 }
 
-bool	dinning(t_info *info, t_dinner *philo)
+void	thinking(t_status *status, t_philo *philo)
 {
-	if (info->flagbreak)
-		return (false);
-	print_act(DINNER, philo, info);
-	philo->last_dinnertime = get_timestamp();
-	philo->eat_times++;
-	sleep_to_time(info->time_to_eat);
-	pthread_mutex_unlock(&info->fork[philo->left_fork]);
-	pthread_mutex_unlock(&info->fork[philo->right_fork]);
-	return (true);
-}
-
-void	thinking(t_info *info, t_dinner *philo)
-{
-	if (info->flagbreak)
+	if (status->flagbreak)
 		return ;
-	print_act(THINK, philo, info);
+	print_act(THINK, philo, status);
 }
 
 void	*daily_life(void *arg)
 {
-	t_info		*info;
-	t_dinner	*philo;
+	t_status	*status;
+	t_philo		*philo;
 
-	philo = (t_dinner *)arg;
-	info = (t_info *)philo->info;
+	philo = (t_philo *)arg;
+	status = (t_status *)philo->info;
 	if (philo->id % 2 == 0)
 	{
-		print_act(THINK, philo, info);
+		print_act(THINK, philo, status);
 		usleep(50);
 	}
-	while (!info->flagbreak)
+	while (!status->flagbreak)
 	{
-		if (info->nb_eaten != 0
-			&& philo->eat_times == info->nb_eaten)
+		if (status->num_of_eat != 0
+			&& philo->eat_times == status->num_of_eat)
 			return (NULL);
-		if (!take_forks(info, philo))
+		if (!take_fork(status, philo))
 			break ;
-		if (!dinning(info, philo))
+		if (!dinning(status, philo))
 			break ;
-		sleeping(info, philo);
-		thinking(info, philo);
+		sleeping(status, philo);
+		thinking(status, philo);
 	}
-	pthread_mutex_unlock(&info->fork[philo->left_fork]);
-	pthread_mutex_unlock(&info->fork[philo->right_fork]);
+	pthread_mutex_unlock(&status->fork[philo->left_fork]);
+	pthread_mutex_unlock(&status->fork[philo->right_fork]);
 	return (NULL);
 }

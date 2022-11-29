@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/24 09:24:13 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/25 08:22:23 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 // if specific "wrong" conditions are met, it will go
 // to the error function and throw a specific defined
 // error according to the situation
-bool	mem_for_infos(t_info *info)
+bool	allocate_mem_to_status(t_status *status)
 {
-	info->fork = malloc(sizeof(pthread_mutex_t) * (info->nb_philos + 1));
-	if (info->fork == NULL)
+	status->fork = malloc(sizeof(pthread_mutex_t) * (status->num_of_philo + 1));
+	if (status->fork == NULL)
 		return (error_thrower(3));
-	info->philo = malloc(sizeof(t_dinner) * info->nb_philos);
-	if (info->philo == NULL)
+	status->philo = malloc(sizeof(t_philo) * status->num_of_philo);
+	if (status->philo == NULL)
 	{
-		free(info->fork);
+		free(status->fork);
 		return (error_thrower(3));
 	}
 	return (true);
@@ -35,19 +35,19 @@ bool	mem_for_infos(t_info *info)
 // using atoi to convert our string input to integers to
 // be able to get a value out of them and use it to iterate
 // through the arguments
-void	args_put_to_info(int len, char *args[], t_info *info)
+void	store_args_in_status(int len, char *args[], t_status *status)
 {
 	int	i;
 
 	i = 0;
-	info->nb_philos = ft_atoi(args[i++]);
-	info->time_to_die = ft_atoi(args[i++]);
-	info->time_to_sleep = ft_atoi(args[i++]);
-	info->time_to_eat = ft_atoi(args[i++]);
-	info->flagbreak = false;
-	info->nb_eaten = 0;
+	status->num_of_philo = ft_atoi(args[i++]);
+	status->time_to_die = ft_atoi(args[i++]);
+	status->time_to_eat = ft_atoi(args[i++]);
+	status->time_to_sleep = ft_atoi(args[i++]);
+	status->flagbreak = false;
+	status->num_of_eat = 0;
 	if (len == 6)
-		info->nb_eaten = ft_atoi(args[i]);
+		status->num_of_eat = ft_atoi(args[i]);
 }
 
 // using the dot (.) syntax to access the
@@ -56,21 +56,21 @@ void	args_put_to_info(int len, char *args[], t_info *info)
 // since strings cant be passed as input its important to
 // pass only integers (as strings are an array of characters
 // and its not possible to pass it via such a struct)
-void	set_dinnertable(t_info *info)
+void	init_struct_philo(t_status *status)
 {
 	int	i;
 
 	i = 0;
-	while (i < info->nb_philos)
+	while (i < status->num_of_philo)
 	{
-		info->philo[i].id = i + 1;
+		status->philo[i].id = i + 1;
 		if (i == 0)
-			info->philo[i].right_fork = info->nb_philos - 1;
+			status->philo[i].right_fork = status->num_of_philo - 1;
 		else
-			info->philo[i].right_fork = i - 1;
-		info->philo[i].left_fork = i;
-		info->philo[i].eat_times = 0;
-		info->philo[i].info = info;
+			status->philo[i].right_fork = i - 1;
+		status->philo[i].left_fork = i;
+		status->philo[i].eat_times = 0;
+		status->philo[i].info = status;
 		i++;
 	}
 }
@@ -78,15 +78,15 @@ void	set_dinnertable(t_info *info)
 // setting up our structure in general, allocating
 // memory for our information that we need to store for
 // our philos
-bool	struct_initializer(int argc, char *argv[], t_info *info)
+bool	init_struct(int argc, char *argv[], t_status *status)
 {
-	args_put_to_info(argc, argv, info);
-	if (!mem_for_infos(info))
+	store_args_in_status(argc, argv, status);
+	if (!allocate_mem_to_status(status))
 		return (false);
-	set_dinnertable(info);
-	if (!initialize_mutex(info))
+	init_struct_philo(status);
+	if (!init_mutex(status))
 	{
-		be_free(info);
+		be_free(status);
 		return (error_thrower(4));
 	}
 	return (true);

@@ -6,26 +6,26 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:21 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/24 09:36:17 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/25 08:22:41 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
 //destroying the mutex for the forks
-void	mutex_destroyer(t_info *info)
+void	mutex_destroyer(t_status *status)
 {
 	int	i;
 
 	i = 0;
-	while (i < info->nb_philos)
+	while (i < status->num_of_philo)
 	{
-		pthread_mutex_destroy(&info->fork[i]);
+		pthread_mutex_destroy(&status->fork[i]);
 		i++;
 	}
 }
 
-bool	arg_check(int argc, char *argv[])
+bool	check_args(int argc, char *argv[])
 {
 	int	i;
 
@@ -39,23 +39,23 @@ bool	arg_check(int argc, char *argv[])
 	return (true);
 }
 
-bool	startup(t_info *info)
+bool	start_philo(t_status *status)
 {
 	int			i;
 	pthread_t	check;
 
-	info->starttime = get_timestamp();
-	if (!thread_nb_philos(info))
+	status->start_time = get_timestamp();
+	if (!thread_num_of_philo(status))
 	{
-		be_free(info);
+		be_free(status);
 		return (error_thrower(5));
 	}
-	pthread_create(&check, NULL, death_counter, info);
-	pthread_mutex_unlock(&info->print);
+	pthread_create(&check, NULL, grim_reaper, status);
+	pthread_mutex_unlock(&status->print);
 	pthread_join(check, NULL);
 	i = 0;
-	while (i < info->nb_philos)
-		pthread_join(info->philo[i++].thr, NULL);
+	while (i < status->num_of_philo)
+		pthread_join(status->philo[i++].th, NULL);
 	return (true);
 }
 
@@ -64,20 +64,20 @@ bool	startup(t_info *info)
 // using memset to be able to copy the
 // output of the n-th character to the string
 // going through 
-int	main(int argc, char **argv)
+int	main(int argc, char *argv[])
 {
-	t_info	info;
-	
-	memset(&info, 0, sizeof(t_info));
+	t_status	status;
+
+	memset(&status, 0, sizeof(t_status));
 	if (argc != 5 && argc != 6)
 		return (error_thrower(1));
-	if (!arg_check(argc - 1, argv + 1))
+	if (!check_args(argc - 1, argv + 1))
 		return (error_thrower(2));
-	if (!struct_initializer(argc, argv + 1, &info))
+	if (!init_struct(argc, argv + 1, &status))
 		return (1);
-	if (!startup(&info))
+	if (!start_philo(&status))
 		return (1);
-	mutex_destroyer(&info);
-	be_free(&info);
+	mutex_destroyer(&status);
+	be_free(&status);
 	return (0);
 }

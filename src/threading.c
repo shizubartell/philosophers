@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:33:16 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 13:17:51 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/25 08:20:40 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 // creating a thread for the number of philos
 // that are sitting at the table. 
-bool	thread_nb_philos(t_info *info)
+bool	thread_num_of_philo(t_status *status)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while (i < info->nb_philos)
+	while (i < status->num_of_philo)
 	{
-		if (pthread_create(&info->philo[i].thr, NULL, \
-				&daily_life, &info->philo[i]))
+		if (pthread_create(&status->philo[i].th, NULL,
+				&daily_life, &status->philo[i]))
 			return (false);
-		info->philo[i].last_dinnertime = get_timestamp();
+		status->philo[i].last_eat_time = get_timestamp();
 		i++;
 	}
 	return (true);
@@ -32,27 +32,27 @@ bool	thread_nb_philos(t_info *info)
 
 // initializing a mutex for the number of
 // forks the philos are going to use
-bool	mutex_nb_forks(t_info *info)
+bool	mutex_num_of_fork(t_status *status)
 {
 	int	i;
 
 	i = 0;
-	while (i < info->nb_philos)
+	while (i < status->num_of_philo)
 	{
-		if (pthread_mutex_init(&info->fork[i], NULL))
-			return (false) ;
+		if (pthread_mutex_init(&status->fork[i], NULL))
+			return (false);
 		i++;
 	}
-	if (pthread_mutex_init(&info->print, NULL))
+	if (pthread_mutex_init(&status->print, NULL))
 		return (false);
 	return (true);
 }
 
 // initializing a mutex, if its not our
 // fork mutex it returns false, otherwise true
-bool	initialize_mutex(t_info *info)
+bool	init_mutex(t_status *status)
 {
-	if (!mutex_nb_forks(info))
+	if (!mutex_num_of_fork(status))
 		return (false);
 	return (true);
 }

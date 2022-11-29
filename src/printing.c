@@ -6,24 +6,31 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:42:32 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/21 11:45:42 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/29 11:56:00 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-// simply printing the output of a given action like eat,
-// sleep, die into the terminal, locking it from each thread with its given
-// mutex, output is the time and id as a message
-// we are using pthread_mutex_t to initiliaze it in out struct
-// to be able to lock the info to be printed for a moment in the
-// thread to make sure it doesnt get overwritten by a different
-// info to be printed
-void	print_act(char *mess, t_dinner *philo, t_info *info)
+int	print_error(char *str)
 {
-	if (info->flagbreak)
-		return ;
-	pthread_mutex_lock(&info->print);
-	printf(mess, get_timestamp() - info->starttime, philo->id);
-	pthread_mutex_unlock(&info->print);
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		write(2, &str[i], 1);
+	return (1);
+}
+
+void	print_status(t_philo *philo, const char *str)
+{
+	long long	t;
+
+	pthread_mutex_lock(&philo->status->print);
+	if (!check_finish(philo, 0))
+	{
+		t = get_time() - philo->status->starttime;
+		printf("%lld %d %s\n", t, philo->id, str);
+	}
+	pthread_mutex_unlock(&philo->status->print);
 }

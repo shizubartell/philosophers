@@ -1,60 +1,43 @@
 # **************************************************************************** #
 # VARIABLES
 
-NAME				:= philo
+NAME = philo
 
-FUN					:= 0
-CC					:= gcc
-CFLAGS				:= -Wall -Werror -Wextra -pthread
-RM					:= rm -rf
+CFLAGS = -g -Wall -Wextra -Werror -pthread
 
 # **************************************************************************** #
 # SOURCES
 
-SRCS		 		:= src/actions.c \
-						src/printing.c \
-						src/utils.c \
-						src/main.c \
-						src/errorerrorerror.c \
-						src/initialize.c \
-						src/threading.c \
-						src/monitoring.c \
-						src/atoi.c
+INC = inc/
 
-OBJS = $(SRCS:.c=.o)
+SRC_FILES = main.c actions.c errorerrorerror.c initialize.c monitoring.c \
+			printing.c threading.c ft_utils.c philohelp.c
 
-INC		 			:= /inc
+SRC = ${addprefix src/, ${SRC_FILES}}
 
-# **************************************************************************** #
-# COLORS
+OBJS = ${SRC:.c=.o}
 
-GREEN		:= \033[0;92m
-YELLOW		:= \033[0;93m
-BLUE		:= \033[0;94m
-END_COLOR	:= \033[0;39m
+RM = rm -rf
+
+NR = norminette -R CheckForbiddenSourceHeader
 
 # **************************************************************************** #
 # RULES
 
-all: $(NAME)
+all: ${NAME}
 
 ${NAME}:${OBJS}
 	${CC} ${CFLAGS} -I${INC} -o $@ $^
-	@echo "$(BLUE)$(NAME) compiled and ready to be tested!$(END_COLOR)"
-	@echo "$(GREEN)Philosophers are ready to die!$(END_COLOR)"
+	@echo "$(NAME) compiled and ready to be tested!"
+	@echo "Philosophers are ready to die!"
 
-fun: CFLAGS += -D FUN
-fun:	${OBJS}
-		${CC} ${CFLAGS} -I ${INC} -o $@ $^
+.c.o:
+	${CC} ${CFLAGS} -I${INC} -c $< -o $@
 
 clean:
-	rm -rf $(OBJS)
+	${RM} ${OBJS}
 
 fclean: clean
-	$(RM) $(NAME)
-	$(RM) $(OBJS)
+	${RM} ${NAME}
 
 re: fclean all
-	@echo "$(GREEN)Cleaned up all files for $(NAME)!"
-
-.PHONY: all re clean fclean
