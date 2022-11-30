@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/29 12:02:30 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/30 20:21:08 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,16 @@ typedef struct s_status
 	int				num_of_philo;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				time_to_die;
 	int				num_of_eat;
+	int				full_philos;
+	int				finish;
 	long long		starttime;
 	t_philo			*philo;
-	pthread_mutex_t	print;
+	pthread_mutex_t	print_mute;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	finish_mute;
+	pthread_mutex_t	eat_mute;
 }	t_status;
 
 //*********************************************************//
@@ -78,5 +83,17 @@ void	print_status(t_philo *philo, const char *str);
 int		atoi(const char *nptr);
 size_t	get_timestamp(void);
 void	sleeptimer(t_philo *philo, long long ms);
+
+//**** ACTIONS.C ****//
+
+int		grim_reaper(t_philo *philo);
+int		finished(t_philo *philo, int y);
+
+//**** SEARCH_AND_DESTROY.C ****//
+
+int		be_free(t_status *status);
+int		mutex_destroyer(t_status *status);
+void	join_destroyer(t_status *status);
+void	destroyer(t_status *status);
 
 #endif

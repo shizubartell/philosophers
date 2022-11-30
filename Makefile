@@ -10,8 +10,8 @@ CFLAGS = -g -Wall -Wextra -Werror -pthread
 
 INC = inc/
 
-SRC_FILES = main.c actions.c errorerrorerror.c initialize.c monitoring.c \
-			printing.c threading.c ft_utils.c philohelp.c
+SRC_FILES = main.c actions.c printing.c search_and_destroy.c \
+			
 
 SRC = ${addprefix src/, ${SRC_FILES}}
 
