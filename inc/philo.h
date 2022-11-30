@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:24:06 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/30 20:21:08 by abartell         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:42:43 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,10 @@ int		be_free(t_status *status);
 int		mutex_destroyer(t_status *status);
 void	join_destroyer(t_status *status);
 void	destroyer(t_status *status);
+
+//**** INITIALIZE.C ****//
+
+int		setup_philo(t_status *status);
+int		init_status(t_status *status, int argc, char **argv);
 
 #endif
