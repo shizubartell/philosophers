@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/30 23:39:40 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/01 08:06:22 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,24 @@ int	init_status(t_status *status, int argc, char **argv)
 	else
 		status->num_of_eat = -1;
 	status->finish = 0;
+	return (0);
+}
+
+int	initmutex(t_status *status)
+{
+	int	i;
+
+	i = -1;
+	while (++i < status->num_of_philo)
+	{
+		if (pthread_mutex_init(&status->fork[i], NULL))
+			return (print_error("Error!\nFork mutex!\n"));
+	}
+	if (pthread_mutex_init(&status->print_mute, NULL))
+		return (print_error("Error!\nPrint mutex!\n"));
+	if (pthread_mutex_init(&status->eat_mute, NULL))
+		return (print_error("Error!\nEat mutex!\n"));
+	if (pthread_mutex_init(&status->finish_mute, NULL))
+		return (print_error("Error!\nFinish mutex!\n"));
 	return (0);
 }
