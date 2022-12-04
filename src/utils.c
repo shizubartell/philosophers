@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 10:23:38 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/29 11:59:15 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/04 21:17:05 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,19 @@ int	ft_atoi(const char *nptr)
 	return (n * sign);
 }
 
-size_t	get_timestamp(void)
+long long	get_timestamp(void)
 {
-	size_t			timestamp;
-	struct timeval	tv;
+	struct timeval	timeval;
 
-	gettimeofday(&tv, NULL);
-	timestamp = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (timestamp);
+	gettimeofday(&timeval, NULL);
+	return ((timeval.tv_sec * 1000) + (timeval.tv_usec / 1000));
 }
 
-void	sleeptimer(t_philo *philo, long long ms)
+void	sleeping(t_philo *philo, long long ms)
 {
 	long long	t;
 
-	t = get_time();
-	while (!check_finish(philo, 0) && (get_time() - t) < ms)
+	t = get_timestamp();
+	while (!check_finish(philo, 0) && (get_timestamp() - t) < ms)
 		usleep(100);
 }

@@ -11,6 +11,7 @@ CFLAGS = -g -Wall -Wextra -Werror -pthread
 INC = inc/
 
 SRC_FILES = main.c actions.c printing.c search_and_destroy.c \
+			initialize.c utils.c
 			
 
 SRC = ${addprefix src/, ${SRC_FILES}}

@@ -6,7 +6,7 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:42:32 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/30 20:11:10 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/04 21:09:15 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	print_status(t_philo *philo, const char *str)
 {
 	long long	t;
 
-	pthread_mutex_lock(&philo->status->print_mute);
-	if (!finished(philo, 0))
+	pthread_mutex_lock(&philo->info->print_mutex);
+	if (!check_finish(philo, 0))
 	{
-		t = get_time() - philo->status->starttime;
+		t = get_timestamp() - philo->info->start_time;
 		printf("%lld %d %s\n", t, philo->id, str);
 	}
-	pthread_mutex_unlock(&philo->status->print_mute);
+	pthread_mutex_unlock(&philo->info->print_mutex);
 }

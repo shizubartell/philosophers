@@ -6,44 +6,44 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 12:56:52 by abartell          #+#    #+#             */
-/*   Updated: 2022/11/30 20:10:05 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/04 21:31:02 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	be_free(t_status *status)
+int	be_free(t_info *info)
 {
-	free(status->philo);
-	free(status->fork);
+	free(info->philo);
+	free(info->fork);
 	return (0);
 }
 
-int	mutex_destroyer(t_status *status)
-{
-	int i;
-
-	i = -1;
-	while (++i < status->num_of_philo)
-		pthread_mutex_destroy(&status->fork[i]);
-	be_free(status);
-	pthread_mutex_destroy(&status->print_mute);
-	pthread_mutex_destroy(&status->eat_mute);
-	pthread_mutex_destroy(&status->finish_mute);
-	return (0);
-}
-
-void	join_destroyer(t_status *status)
+int	mutex_destroyer(t_info *info)
 {
 	int	i;
 
 	i = -1;
-	while (++i < status->num_of_philo)
-		pthread_join(status->philo[i].thread, NULL);
-	mutex_destroyer(status);
+	while (++i < info->num_philo)
+		pthread_mutex_destroy(&info->fork[i]);
+	be_free(info);
+	pthread_mutex_destroy(&info->print_mutex);
+	pthread_mutex_destroy(&info->eat_mutex);
+	pthread_mutex_destroy(&info->finish_mutex);
+	return (0);
 }
 
-void	destroyer(t_status *status)
+void	join_free_destroy(t_info *info)
+{
+	int	i;
+
+	i = -1;
+	while (++i < info->num_philo)
+		pthread_join(info->philo[i].thread, NULL);
+	mutex_destroyer(info);
+}
+
+void	destroyer(t_info *info)
 {
 	int	i;
 	int	yes;
@@ -52,13 +52,13 @@ void	destroyer(t_status *status)
 	while (yes)
 	{
 		i = -1;
-		status->num_of_philo = 0;
-		while (++i < status->num_of_philo)
+		info->num_full_philo = 0;
+		while (++i < info->num_philo)
 		{
-			if (yes && check_dead(&status->philo[i]))
+			if (yes && grim_reaper(&info->philo[i]))
 				yes = 0;
 		}
 		usleep(10);
 	}
-	join_destroyer(status);
+	join_free_destroy(info);
 }
