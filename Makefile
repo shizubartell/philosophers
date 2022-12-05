@@ -40,5 +40,6 @@ clean:
 
 fclean: clean
 	${RM} ${NAME}
+	@echo "Everything cleaned up for $(NAME)!"
 
 re: fclean all
