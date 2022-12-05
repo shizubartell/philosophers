@@ -6,12 +6,17 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:57:13 by abartell          #+#    #+#             */
-/*   Updated: 2022/12/04 21:26:57 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/05 10:36:07 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+// death-timer, comparing the time from the last time they have
+// eaten to the time they can survive without food
+// and returning the "died" status if they starved to death
+// incrementing the number of finished philos under
+// certain conditions
 int	grim_reaper(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->eat_mutex);
@@ -38,6 +43,10 @@ int	grim_reaper(t_philo *philo)
 	return (0);
 }
 
+// locking the mutexes for the forks so the philo can eat
+// after finishing eating the meal count will increase,
+// getting the timestamp after and then unlocking the
+// mutexes for another philo to use
 static void	dinnertime(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->fork[philo->left_fork]);
@@ -54,6 +63,7 @@ static void	dinnertime(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->fork[philo->left_fork]);
 }
 
+// checking if a philo is done with eating
 int	check_finish(t_philo *philo, int yes)
 {
 	pthread_mutex_lock(&philo->info->finish_mutex);
@@ -72,6 +82,10 @@ int	check_finish(t_philo *philo, int yes)
 	return (0);
 }
 
+// starting up the philosophers routine,
+// checking if the philos are already finished
+// with eating and initiating the sleeping and
+// thinking phases
 void	*philostarter(void *arg)
 {
 	t_philo	*philo;

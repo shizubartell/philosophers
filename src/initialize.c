@@ -6,12 +6,15 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:24:54 by abartell          #+#    #+#             */
-/*   Updated: 2022/12/04 21:28:23 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/05 10:42:47 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+// using atoi to convert the information strings into
+// integers to be used for the input
+// giving an error if wrong input is given (like - values)
 int	setup_info(t_info *info, int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
@@ -35,6 +38,11 @@ int	setup_info(t_info *info, int ac, char **av)
 	return (0);
 }
 
+// mallocing the memory for the philo and fork usage
+// adding a timestamp and in general setting up the
+// philosophers info with id, forks, meal count, info
+// and last time they have eaten
+// returns an error if the memory cant be allocated
 int	setup_philos(t_info *info)
 {
 	int	i;
@@ -57,6 +65,8 @@ int	setup_philos(t_info *info)
 	return (0);
 }
 
+// error returns if the setup for the
+// different mutexes is wrong
 int	setup_mutex(t_info *info)
 {
 	int	i;
@@ -76,6 +86,7 @@ int	setup_mutex(t_info *info)
 	return (0);
 }
 
+// function to overall create the philo thread 
 int	create_philos(t_info *info)
 {
 	int	i;

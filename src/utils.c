@@ -6,12 +6,14 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 10:23:38 by abartell          #+#    #+#             */
-/*   Updated: 2022/12/04 21:17:05 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/05 10:42:05 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+// atoi function from libft, converting a
+// string to an integer
 int	ft_atoi(const char *nptr)
 {
 	int			i;
@@ -40,6 +42,7 @@ int	ft_atoi(const char *nptr)
 	return (n * sign);
 }
 
+// function to get the current time for the statuses
 long long	get_timestamp(void)
 {
 	struct timeval	timeval;
@@ -48,6 +51,7 @@ long long	get_timestamp(void)
 	return ((timeval.tv_sec * 1000) + (timeval.tv_usec / 1000));
 }
 
+// pause function
 void	sleeping(t_philo *philo, long long ms)
 {
 	long long	t;

@@ -6,12 +6,14 @@
 /*   By: abartell <abartell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:42:32 by abartell          #+#    #+#             */
-/*   Updated: 2022/12/04 21:09:15 by abartell         ###   ########.fr       */
+/*   Updated: 2022/12/05 10:40:00 by abartell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+// printing an error message while
+// interating through the string
 int	print_error(char *str)
 {
 	int	i;
@@ -22,6 +24,9 @@ int	print_error(char *str)
 	return (1);
 }
 
+// using a mutex to lock the status message that is supposed to
+// be printed and unlocking it again after the status was
+// printed to the terminal
 void	print_status(t_philo *philo, const char *str)
 {
 	long long	t;
